@@ -60,7 +60,9 @@ class RememberTheMilkPlasmoid : public Plasma::PopupApplet
   public slots:
     void dataUpdated(const QString &name, const Plasma::DataEngine::Data &data);
     
+    void taskPressed(QModelIndex index);
     void showTaskEditor(QModelIndex index);
+    void markTaskComplete(QModelIndex index);
     void onTaskEditorHide();
     
     void busyUntil(Plasma::ServiceJob *job);

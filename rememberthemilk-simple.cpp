@@ -236,17 +236,36 @@ void RememberTheMilkPlasmoid::onTaskEditorHide() {
   m_tasksView->nativeWidget()->setEnabled(true);
 }
 
-void RememberTheMilkPlasmoid::showTaskEditor(QModelIndex index) {
-  if (index.data(Qt::RTMItemType).toInt() != RTMTaskItem) // We have a header rather than a task.
+void RememberTheMilkPlasmoid::taskPressed(QModelIndex index) {
+  if (index.data(Qt::RTMItemType).toInt() != RTMTaskItem) { // We have a header rather than a task.
     return;
+  }
+
+  Qt::MouseButtons button = QApplication::mouseButtons();
+
+  if (button == Qt::LeftButton) {
+      showTaskEditor(index);
+  }
+  else if (button == Qt::MidButton) {
+      markTaskComplete(index);
+  }
+}
+
+void RememberTheMilkPlasmoid::showTaskEditor(QModelIndex index) {
   m_taskEditor->setModelIndex(index);
   m_taskEditor->hide();
   m_taskEditor->show();
   m_tasksView->nativeWidget()->setEnabled(false);
   m_taskEditor->setEnabled(true);
   m_taskEditor->startAnimation(m_tasksView->size());
-  
+
   geometryChanged();
+}
+
+void RememberTheMilkPlasmoid::markTaskComplete(QModelIndex index) {
+  m_taskEditor->setModelIndex(index);
+  m_taskEditor->hide();
+  m_taskEditor->saveAsCompleted();
 }
 
 void RememberTheMilkPlasmoid::busyUntil(Plasma::ServiceJob* job)
@@ -317,7 +336,7 @@ QGraphicsWidget* RememberTheMilkPlasmoid::graphicsWidget() {
   m_tasksView->nativeWidget()->sortByColumn(0, Qt::AscendingOrder);
   m_tasksView->nativeWidget()->expandAll();
 
-  connect(m_tasksView->nativeWidget(), SIGNAL(clicked(QModelIndex)), this, SLOT(showTaskEditor(QModelIndex)));
+  connect(m_tasksView->nativeWidget(), SIGNAL(pressed(QModelIndex)), this, SLOT(taskPressed(QModelIndex)));
 
   m_addTaskLine = new Plasma::LineEdit(this); // must wait for plasma theming (4.3?) to get a themed lineedit
 

@@ -187,6 +187,11 @@ void TaskEditor::saveChanges() {
   startAnimation(fullSize, false);
 }
 
+void TaskEditor::saveAsCompleted() {
+    KConfigGroup cg = m_service->operationDescription("setCompleted");
+    cg.writeEntry("completed", true);
+    emit jobStarted(m_service->startOperationCall(cg));
+}
 
 void TaskEditor::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
   Q_UNUSED(widget)

@@ -48,6 +48,7 @@ public:
   void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
   void setFullSize(QSizeF size);
   void setModelIndex(QModelIndex index);
+  void saveAsCompleted();
 
 protected:
   void keyPressEvent(QKeyEvent* event);

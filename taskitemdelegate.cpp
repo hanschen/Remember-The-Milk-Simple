@@ -41,7 +41,7 @@ const qreal TaskItemDelegate::COLORTAB = MARGIN*6;
 const QColor TaskItemDelegate::priority1 = QColor(255, 123, 0); // reddish-orange
 const QColor TaskItemDelegate::priority2 = QColor(0, 132, 255); // Darker blue
 const QColor TaskItemDelegate::priority3 = QColor(53, 201, 255);  // Ligher Blue
-const QColor TaskItemDelegate::priorityNone = Plasma::Theme::defaultTheme()->color(Plasma::Theme::BackgroundColor); //QColor(241, 241, 241); // Almost white
+const QColor TaskItemDelegate::priorityNone = Plasma::Theme::defaultTheme()->color(Plasma::Theme::BackgroundColor); // use theme background color
 const QString TaskItemDelegate::tagsPrefix = i18n("Tags: ");
 
 TaskItemDelegate::TaskItemDelegate(QObject *parent)

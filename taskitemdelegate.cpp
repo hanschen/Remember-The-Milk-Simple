@@ -40,8 +40,7 @@ const qreal TaskItemDelegate::COLORTAB = MARGIN*6;
 const QColor TaskItemDelegate::priority1 = QColor(255, 123, 0); // reddish-orange
 const QColor TaskItemDelegate::priority2 = QColor(0, 132, 255); // Darker blue
 const QColor TaskItemDelegate::priority3 = QColor(53, 201, 255);  // Ligher Blue
-const QColor TaskItemDelegate::priorityNone = QColor(241, 241, 241); // Almost white
-
+const QColor TaskItemDelegate::priorityNone = Plasma::Theme::defaultTheme()->color(Plasma::Theme::BackgroundColor); //QColor(241, 241, 241); // Almost white
 const QString TaskItemDelegate::tagsPrefix = i18n("Tags: ");
 
 TaskItemDelegate::TaskItemDelegate(QObject *parent)
@@ -88,15 +87,10 @@ void TaskItemDelegate::paintDueHeader(QPainter* painter, const QRectF& rect, con
   QFontMetrics fm = QApplication::fontMetrics();
   QString dueString = index.data(Qt::DisplayRole).toString();
 
-  QLinearGradient gradient(rect.bottomLeft(), rect.bottomRight());
-  gradient.setColorAt(0, Plasma::Theme::defaultTheme()->color(Plasma::Theme::TextColor));
-  gradient.setColorAt((qreal)(0.9*fm.width(dueString)+2*MARGIN)/rect.width(), Plasma::Theme::defaultTheme()->color(Plasma::Theme::TextColor));
-  gradient.setColorAt((qreal)(1.3*fm.width(dueString)+2*MARGIN)/rect.width(), Qt::transparent);
-  painter->setBrush(Qt::NoBrush);
-  painter->setPen(QPen(QBrush(gradient), 1));
-  painter->drawLine(rect.bottomLeft()+QPoint(0, -MARGIN), rect.bottomRight()+QPoint(0, -MARGIN));
-  
   painter->setPen(Plasma::Theme::defaultTheme()->color(Plasma::Theme::TextColor));
+  QFont font = painter->font();
+  font.setBold(true);
+  painter->setFont(font);
   painter->drawText(rect.bottomLeft()+QPoint(MARGIN, -2*MARGIN) ,dueString);
   
   painter->restore();
@@ -148,15 +142,15 @@ void TaskItemDelegate::paintTask(QPainter* painter, const QStyleOptionViewItem &
   painter->save();
   if (smallTasks) { // Paint the background for a small task
     painter->save();
-    painter->setOpacity(0.5);
-    painter->setBrush(Plasma::Theme::defaultTheme()->color(Plasma::Theme::BackgroundColor));
+    painter->setOpacity(0.7);
+    painter->setBrush(itemPriorityColor(index));
     painter->setPen(Qt::NoPen);
-    painter->drawRoundedRect(rect.adjusted(leftMargin, MARGIN, -MARGIN, -MARGIN), 3, 3);
+    painter->drawRect(rect.adjusted(leftMargin, MARGIN, -MARGIN, -MARGIN));
     painter->restore();
   }
   else { // Paint the background for a two row task
     painter->save();
-    painter->setOpacity(0.5);
+    painter->setOpacity(0.7);
     painter->setBrush(Plasma::Theme::defaultTheme()->color(Plasma::Theme::BackgroundColor));
     painter->drawRect(option.rect.adjusted(leftMargin, MARGIN, -MARGIN, -MARGIN));
     
@@ -169,29 +163,11 @@ void TaskItemDelegate::paintTask(QPainter* painter, const QStyleOptionViewItem &
     painter->setBrush(Plasma::Theme::defaultTheme()->color(Plasma::Theme::HighlightColor));
     painter->setPen(Qt::NoPen);
     if (smallTasks)
-      painter->drawRoundedRect(rect.adjusted(leftMargin, MARGIN, -MARGIN, -MARGIN), 3, 3);
+      painter->drawRect(rect.adjusted(leftMargin, MARGIN, -MARGIN, -MARGIN));
     else
       painter->drawRect(rect.adjusted(leftMargin, MARGIN, -MARGIN, -MARGIN));
     painter->restore();
   }
-  
-  //Paint Priority tab on the left
-  painter->setPen(Qt::NoPen);
-  painter->setBrush(itemPriorityColor(index));
-  painter->drawRoundedRect(QRectF(option.rect.topLeft()+QPointF(leftMargin, MARGIN), option.rect.bottomLeft()+QPointF(COLORTAB, 0)), 3, 3);
-
-  
-  // Draw Bounding rect/box
-  painter->save();
-  painter->setOpacity(.5);
-  painter->setPen(Plasma::Theme::defaultTheme()->color(Plasma::Theme::TextColor));
-  painter->setBrush(Qt::NoBrush);
-  if (smallTasks)
-    painter->drawRoundedRect(option.rect.adjusted(leftMargin, MARGIN, -MARGIN, -MARGIN), 3, 3);
-  else
-    painter->drawRect(option.rect.adjusted(leftMargin, MARGIN, -MARGIN, -MARGIN));
-  painter->restore();
-  
   
   // Draw Task information
   painter->setPen(Plasma::Theme::defaultTheme()->color(Plasma::Theme::TextColor));

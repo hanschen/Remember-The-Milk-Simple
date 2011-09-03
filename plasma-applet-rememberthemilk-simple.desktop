@@ -1,0 +1,20 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Remember The Milk Simple
+Comment=Simple todo list for Remember The Milk
+Icon=view-calendar-tasks
+Type=Service
+ServiceTypes=Plasma/Applet
+
+X-KDE-Library=plasma_applet_rememberthemilk-simple
+X-KDE-PluginInfo-Author=Hans Chen
+X-KDE-PluginInfo-Email=contact@hanschen.org
+X-KDE-PluginInfo-Name=rememberthemilk-simple
+X-KDE-PluginInfo-Version=0.1
+X-KDE-PluginInfo-Website=http://hanschen.org
+X-KDE-PluginInfo-Category=Online Services
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true
+X-Plasma-NotificationArea=false
+

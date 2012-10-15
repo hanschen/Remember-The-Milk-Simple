@@ -7,7 +7,7 @@ A simplified version the Remember The Milk widget from kdeplasma-addons.
 You need to have the Remember The Milk dataengine installed, usually by 
 installing kdeplasma-addons.
 
-![http://hanswchen.files.wordpress.com/2011/09/rememberthemilk-simple.png?w=300&h=240](http://hanswchen.files.wordpress.com/2011/09/rememberthemilk-simple.png)
+![](http://hanswchen.files.wordpress.com/2011/09/rememberthemilk-simple.png)
 
 Installation
 ------------
